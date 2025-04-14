@@ -1,0 +1,87 @@
+<div class="weather-container">
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading weather data...</p>
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    <mat-card>
+      <mat-card-content>
+        <mat-icon color="warn">error_outline</mat-icon>
+        <p>{{ error }}</p>
+        <button mat-raised-button color="primary" (click)="goBack()">Back to Search</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngIf="weatherData && !isLoading" class="weather-details">
+    <mat-card class="current-weather-card">
+      <mat-card-header>
+        <mat-card-title>{{ weatherData.city }}</mat-card-title>
+        <mat-card-subtitle>Current Weather</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="current-weather-content">
+          <div class="weather-icon">
+            <img [src]="'https:' + weatherData.current.icon" 
+                  [alt]="weatherData.current.description">
+          </div>
+          <div class="weather-info">
+            <div class="temperature">{{ weatherData.current.temperature }}°C</div>
+            <div class="description">{{ weatherData.current.description | titlecase }}</div>
+            <div class="details-grid">
+              <div class="detail-item">
+                <mat-icon>opacity</mat-icon>
+                <span>Humidity</span>
+                <span class="value">{{ weatherData.current.humidity }}%</span>
+              </div>
+              <div class="detail-item">
+                <mat-icon>air</mat-icon>
+                <span>Wind Speed</span>
+                <span class="value">{{ weatherData.current.windSpeed }} m/s</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="forecast-section">
+      <h2>5-Day Forecast</h2>
+      <div class="forecast-cards">
+        <mat-card *ngFor="let day of weatherData.forecast" class="forecast-card">
+          <mat-card-content>
+            <div class="forecast-date">{{ day.date | date:'EEE, MMM d' }}</div>
+            <img [src]="'https:' + day.icon"
+                  [alt]="day.description">
+            <div class="forecast-temp">
+              <span class="max-temp">{{ day.maxTemp }}°</span>
+              <span class="min-temp">{{ day.minTemp }}°</span>
+            </div>
+            <div class="forecast-desc">{{ day.description | titlecase }}</div>
+            <div class="forecast-details">
+              <div class="detail">
+                <mat-icon>opacity</mat-icon>
+                <span>{{ day.humidity }}%</span>
+              </div>
+              <div class="detail">
+                <mat-icon>air</mat-icon>
+                <span>{{ day.windSpeed }} m/s</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <canvas #temperatureChart></canvas>
+    </div>
+
+    <div class="footer-actions">
+      <button mat-raised-button class="back-button" (click)="goBack()">
+        Back to Search
+      </button>
+    </div>
+  </div>
+</div>

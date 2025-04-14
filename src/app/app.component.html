@@ -1,0 +1,10 @@
+
+<mat-toolbar color="primary" *ngIf="showLogoutButton">
+  <button mat-raised-button color="warn" (click)="logout()" aria-label="Logout" class="logout-button">
+    Logout
+  </button>
+</mat-toolbar>
+
+<div class="app-container">
+  <router-outlet></router-outlet>
+</div>

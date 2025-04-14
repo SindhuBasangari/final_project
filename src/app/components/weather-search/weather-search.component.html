@@ -1,0 +1,29 @@
+<div class="search-container">
+  <mat-card class="search-card">
+    <mat-card-header>
+      <mat-card-title>Weather Forecast</mat-card-title>
+      <mat-card-subtitle>Enter a city name to get weather information</mat-card-subtitle>
+      <div class="weather-icon">⛅</div>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <form class="search-form" (ngSubmit)="searchWeather()">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Enter city name</mat-label>
+          <input matInput
+                  [(ngModel)]="city"
+                  name="city"
+                  autocomplete="off">
+        </mat-form-field>
+        
+        <button mat-raised-button
+                type="submit"
+                class="search-button blue-button"
+                [disabled]="!city.trim()">
+          <mat-icon></mat-icon>
+          Search
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
